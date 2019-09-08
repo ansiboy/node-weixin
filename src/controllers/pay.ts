@@ -1,6 +1,8 @@
 import { action, controller } from "maishu-node-mvc";
 import { wx } from "../common";
 import { guid } from "maishu-chitu-service";
+import { request } from "maishu-node-mvc/dist/attributes";
+import http = require("http");
 
 @controller("pay")
 export class PayController {
@@ -16,7 +18,18 @@ export class PayController {
     }
 
     @action()
-    async notify() {
+    async notify(@request req: http.IncomingMessage) {
+
+        let data = "";
+        req.on("data", chunk => {
+            data = data + chunk;
+        });
+        req.on("end", () => {
+            console.log("=== data ========================")
+            console.log(data);
+            console.log("==================================")
+        })
+
         console.log("notify");
 
     }
