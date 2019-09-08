@@ -22,7 +22,7 @@ export class MCH {
         return `${MCH.baseURL}/${path}`;
     }
 
-    async getsignkey() {
+    private async getsignkey() {
 
         let partnerId: string = this.cr.getParanerId();
         let partnerKey: string = this.cr.getParanerKey();
@@ -37,6 +37,12 @@ export class MCH {
         type Result = { return_code: string, return_msg: string, sandbox_signkey: string }
         let obj = await WeiXinRequest.postByXML<Result>(url, args);
         return obj;
+    }
+
+    async paySign(args: { [key: string]: string }) {
+        let key = await this.getParanerKey();
+        let sign = getMD5Sign(key, args);
+        return sign;
     }
 
     async unifiedorder(args: {
@@ -66,6 +72,8 @@ export class MCH {
 
 
     private async getParanerKey() {
+        if (this.cr.getIsSandBox() == false)
+            return this.cr.getParanerKey();
 
         if (!this.sandboxPartnerKey) {
             let r = await this.getsignkey();

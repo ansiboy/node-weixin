@@ -28,7 +28,7 @@ export class WeiXinSDK {
 
         let appid: string = this.cr.getAppId();
         let secret: string = this.cr.getAppKey();
-        
+
         fromCache = fromCache == null ? true : fromCache;
 
         let url = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${appid}&secret=${secret}`;
@@ -45,6 +45,10 @@ export class WeiXinSDK {
         }
 
         return r;
+    }
+
+    async sign(args: { [key: string]: string }) {
+
     }
 }
 

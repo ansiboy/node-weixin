@@ -1,7 +1,8 @@
-import { Controller, action, controller } from "maishu-node-mvc";
+import { Controller, action, controller, routeData } from "maishu-node-mvc";
 import { config } from "../config";
+import { wx } from "../common";
 
-@controller()
+@controller("/")
 export class HomeController extends Controller {
     @action("/")
     index() {
@@ -12,5 +13,11 @@ export class HomeController extends Controller {
     config() {
         let { appId, partnerId } = config.weixin;
         return { appId, partnerId };
+    }
+
+    @action()
+    async paySign(@routeData args) {
+        let r = await wx.mch.paySign(args);
+        return r;
     }
 }
