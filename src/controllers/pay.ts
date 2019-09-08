@@ -8,7 +8,7 @@ export class PayController {
     async prepayid() {
         //oYHEKuMV8Kt0QLBIMjmZfxoWwsjU
         let r = await wx.mch.unifiedorder({
-            openid: "oYHEKuMV8Kt0QLBIMjmZfxoWwsjU", body: "body", notify_url: "www.163.com",
+            openid: "oYHEKuMV8Kt0QLBIMjmZfxoWwsjU", body: "body", notify_url: "http://web.alinq.cn/weixin/pay/notify",
             out_trade_no: guid(), total_fee: 101
         })
 
@@ -18,6 +18,6 @@ export class PayController {
     @action()
     async notify() {
         console.log("notify");
-        
+
     }
 }
