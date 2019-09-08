@@ -1,0 +1,9 @@
+{
+    "scripts": {
+        "build": "tsc -p src",
+        "start": "node out/index"
+    },
+    "dependencies": {
+        "maishu-node-mvc": "^1.20.0"
+    }
+}
