@@ -2,6 +2,7 @@ import { Service } from "maishu-chitu-service";
 import xmljs = require('xml-js');
 import fetch from "node-fetch"
 import { errors } from "./errors";
+import { promises } from "dns";
 
 const SUCCESS_NUM = 0;
 const SUCCESS_STR = "SUCCESS";
@@ -22,7 +23,7 @@ export class WeiXinRequest {
         return r as T;
     }
 
-    static async postByXML<T>(url: string, args?: object) {
+    static async postByXML<T>(url: string, args?: object): Promise<T> {
         args = args || {};
         var options = { compact: true };
         let xml = xmljs.json2xml(JSON.stringify(args), options);
