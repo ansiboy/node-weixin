@@ -1,7 +1,8 @@
 {
     "scripts": {
         "build": "tsc -p src",
-        "start": "node ./out/index.js"
+        "start": "node ./out/index.js",
+        "test": "mocha"
     },
     "dependencies": {
         "crypto-js": "^3.1.9-1",
