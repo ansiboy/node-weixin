@@ -2,8 +2,8 @@ const { WeiXinSDK } = require("../out/lib/wexin-sdk");
 const { config } = require("../out/config");
 
 let weixinSDK = new WeiXinSDK();
-weixinSDK.config.appid = config.weixin.appid;
-weixinSDK.config.appkey = config.weixin.appkey;
+weixinSDK.config.appid = config.weixin.appId;
+weixinSDK.config.appkey = config.weixin.appKey;
 weixinSDK.config.partnerId = config.weixin.partnerId;
 weixinSDK.config.partnerKey = config.weixin.partnerKey;
 weixinSDK.config.isSandBox = true;

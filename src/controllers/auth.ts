@@ -16,7 +16,8 @@ export class AuthController extends Controller {
         request.url;
         let callbackURL = encodeURIComponent(`${config.baseURL}/auth/callback`);
         let scope: "snsapi_base" | "snsapi_userinfo" = "snsapi_base";
-        let targetURL = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${config.weixin.appid}&redirect_uri=${callbackURL}&response_type=code&scope=${scope}#wechat_redirect`
+        let appId = config.weixin.appId;
+        let targetURL = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=${callbackURL}&response_type=code&scope=${scope}#wechat_redirect`
         return this.redirect(targetURL);
     }
 }
