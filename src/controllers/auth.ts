@@ -2,7 +2,7 @@
 import { controller, action, Controller, routeData } from "maishu-node-mvc";
 import { request } from "maishu-node-mvc/dist/attributes";
 import http = require("http");
-import { config } from "../confg";
+import { config } from "../config";
 
 @controller("/auth")
 export class AuthController extends Controller {

@@ -1,5 +1,5 @@
 import { startServer } from "maishu-node-mvc";
-import { config } from "./confg";
+import { config } from "./config";
 import * as path from "path";
 
 startServer({

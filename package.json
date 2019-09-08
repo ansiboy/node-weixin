@@ -4,6 +4,6 @@
         "start": "node out/index"
     },
     "dependencies": {
-        "maishu-node-mvc": "^1.20.0"
+        "maishu-node-mvc": "^1.30.0"
     }
 }
