@@ -8,17 +8,15 @@ import { config } from "../config";
 export class AuthController extends Controller {
     @action()
     callback(@routeData { code }) {
-        return this.redirect("http://www.163.com")
+        return code;
     }
 
     @action()
     code(@request request: http.IncomingMessage) {
-        // return this.redirect("http://www.163.com")
         request.url;
-        let host = request.headers["host"];
-        let callbackURL = encodeURIComponent(`http://${host}/auth/callback`);
+        let callbackURL = encodeURIComponent(`${config.baseURL}/auth/callback`);
         let scope: "snsapi_base" | "snsapi_userinfo" = "snsapi_base";
-        let targetURL = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${config.appid}&redirect_uri=${callbackURL}&response_type=code&scope=${scope}#wechat_redirect`
+        let targetURL = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${config.weixin.appid}&redirect_uri=${callbackURL}&response_type=code&scope=${scope}#wechat_redirect`
         return this.redirect(targetURL);
     }
 }
