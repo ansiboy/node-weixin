@@ -1,5 +1,6 @@
 const { WeiXinSDK } = require("../out/lib/wexin-sdk");
 const { config } = require("../out/config");
+const { guid } = require("maishu-chitu-service");
 
 let weixinSDK = new WeiXinSDK();
 weixinSDK.config.appid = config.weixin.appId;
@@ -53,16 +54,36 @@ describe('mch', function () {
 
 
     it("unifiedorder", async function () {
-        try {
-            let r = await weixinSDK.mch.unifiedorder({
-                openid: "oYHEKuMV8Kt0QLBIMjmZfxoWwsjU", body: "body", notify_url: "www.163.com",
-                out_trade_no: "111111", total_fee: "101"
-            });
-            assert.notEqual(r, null);
-            assert.notEqual(r.prepay_id, null);
-        }
-        catch (err) {
-            console.log(err)
-        }
+        let r = await weixinSDK.mch.unifiedorder({
+            openid: "oYHEKuMV8Kt0QLBIMjmZfxoWwsjU", body: "body", notify_url: "www.163.com",
+            out_trade_no: "111111", total_fee: "101"
+        });
+        assert.notEqual(r, null);
+        assert.notEqual(r.prepay_id, null);
+
+    })
+
+    it("micropay", async function () {
+        let r = await weixinSDK.mch.micropay({
+            body: "付款码支付测试", out_trade_no: guid(),
+            total_fee: 1,
+        });
+
+        console.log(r)
+    })
+
+    it("orderquery", async function () {
+        let r = await weixinSDK.mch.orderquery({
+            out_trade_no: "111111"
+        })
+
+        console.log(r);
+    })
+
+    it("downloadbill", async function () {
+        let r = await weixinSDK.mch.downloadbill({
+            bill_date: "20190909"
+        })
+        console.log(r);
     })
 });

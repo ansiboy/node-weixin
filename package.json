@@ -6,7 +6,7 @@
     },
     "dependencies": {
         "crypto-js": "^3.1.9-1",
-        "maishu-chitu-service": "^1.8.0",
+        "maishu-chitu-service": "^1.8.5",
         "maishu-node-mvc": "^1.30.0",
         "node-cache": "^4.2.1",
         "node-fetch": "^2.6.0",

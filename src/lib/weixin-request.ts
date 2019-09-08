@@ -35,6 +35,11 @@ export class WeiXinRequest {
             })
             .then(text => {
 
+                let isXML = text.startsWith("<xml>") && text.endsWith("</xml>");
+                if (!isXML) {
+                    return Promise.resolve(text as any as T);
+                }
+          
                 let json: string = xmljs.xml2json(text, { compact: true });
 
                 let obj = JSON.parse(json);

@@ -12,7 +12,7 @@ export function getNonceStr() {
     return noceStr;
 }
 
-export function getMD5Sign(key: string, params: { [key: string]: string }) {
+export function getMD5Sign(key: string, params: { [key: string]: string | number }) {
     let names = Object.getOwnPropertyNames(params);
     names.sort((a, b) => a < b ? -1 : 1);
     let str = names.map(o => o + "=" + params[o]).join("&") + "&key=" + key;

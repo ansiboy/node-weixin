@@ -1,6 +1,5 @@
 import { WeiXinRequest } from "./weixin-request";
-import { getNonceStr, getMD5Sign, Config, ConfigReader } from "./common";
-import { errors } from "./errors";
+import { getNonceStr, getMD5Sign, ConfigReader } from "./common";
 
 export class MCH {
 
@@ -30,25 +29,24 @@ export class MCH {
         let url = this.url("pay/getsignkey");
 
         let nonce_str = getNonceStr();
-        // nonce_str = "24B16FEDE9A67C9251D3E7C7161C83AC";
         let sign = getMD5Sign(partnerKey, { mch_id: partnerId, nonce_str });
         let args = { sign, mch_id: partnerId, nonce_str };
 
         type Result = { return_code: string, return_msg: string, sandbox_signkey: string }
         let obj = await WeiXinRequest.postByXML<Result>(url, args);
-        return obj;
+        return obj as Result;
     }
 
     async paySign(args: { [key: string]: string }) {
-        let key = await this.getParanerKey();
+        let key = this.cr.getAppKey();
         let sign = getMD5Sign(key, args);
         return sign;
     }
 
     async unifiedorder(args: {
         openid: string, body: string, notify_url: string,
-        out_trade_no: string, total_fee: string
-    }): Promise<{ prepay_id: string }> {
+        out_trade_no: string, total_fee: number
+    }): Promise<{ prepay_id: string | number }> {
 
         let url = this.url("pay/unifiedorder");
         let nonce_str = getNonceStr();
@@ -67,9 +65,55 @@ export class MCH {
 
         type Result = { prepay_id: string };
         let obj = await WeiXinRequest.postByXML<Result>(url, args);
+        return obj as Result;
+    }
+
+    async micropay(args: { body: string, out_trade_no: string, total_fee: number }) {
+        let url = this.url("pay/micropay");
+        args["appid"] = this.cr.getAppId();
+        args["mch_id"] = this.cr.getParanerId();
+        args["nonce_str"] = getNonceStr();
+        args["spbill_create_ip"] = "8.8.8.8";
+        args["auth_code"] = "120061098828009406";
+
+        let key = await this.getParanerKey();
+        let sign = getMD5Sign(key, args);
+        args["sign"] = sign;
+        //sign
+
+
+        type Result = {};
+        let obj = await WeiXinRequest.postByXML<Result>(url, args);
         return obj;
     }
 
+    async orderquery(args: { out_trade_no: string }) {
+        let url = this.url("pay/orderquery");
+        args["appid"] = this.cr.getAppId();
+        args["mch_id"] = this.cr.getParanerId();
+        args["nonce_str"] = getNonceStr();
+
+        let key = await this.getParanerKey();
+        let sign = getMD5Sign(key, args);
+        args["sign"] = sign;
+
+        let obj = await WeiXinRequest.postByXML(url, args);
+        return obj;
+    }
+
+    async downloadbill(args: { bill_date: string, bill_type?: string, tar_type?: string }) {
+        args["appid"] = this.cr.getAppId();
+        args["mch_id"] = this.cr.getParanerId();
+        args["nonce_str"] = getNonceStr();
+        args.bill_type = "ALL";
+
+        let key = await this.getParanerKey();
+        args["sign"] = getMD5Sign(key, args);
+
+        let url = this.url("pay/downloadbill");
+        let obj = await WeiXinRequest.postByXML(url, args);
+        return obj;
+    }
 
     private async getParanerKey() {
         if (this.cr.getIsSandBox() == false)
