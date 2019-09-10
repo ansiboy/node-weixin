@@ -1,17 +1,25 @@
 import { action, controller } from "maishu-node-mvc";
 import { wx } from "../common";
 import { guid } from "maishu-chitu-service";
-import { request } from "maishu-node-mvc/dist/attributes";
+import { request, routeData } from "maishu-node-mvc/dist/attributes";
 import http = require("http");
+import { errors } from "../error";
+import { xml2json } from "xml-js";
+import { parseXMLToJSON } from "../lib/weixin-sdk";
 
 @controller("pay")
 export class PayController {
     @action()
-    async prepayid() {
+    async prepayid(@routeData { orderId, applicationId, openId, amount }) {
+        if (!orderId) throw errors.routeDataFieldNull("orderId");
+        if (!applicationId) throw errors.routeDataFieldNull("applicationId");
+        if (!openId) throw errors.routeDataFieldNull("openId");
+        if (!amount) throw errors.routeDataFieldNull("amount");
+
         //oYHEKuMV8Kt0QLBIMjmZfxoWwsjU
         let r = await wx.mch.unifiedorder({
-            openid: "oYHEKuMV8Kt0QLBIMjmZfxoWwsjU", body: "body", notify_url: "http://web.alinq.cn/weixin/pay/notify",
-            out_trade_no: guid(), total_fee: 101
+            openid: openId, body: "body", notify_url: "http://web.alinq.cn/weixin/pay/notify",
+            out_trade_no: guid(), total_fee: amount, attach: JSON.stringify({ applicationId })
         })
 
         return r;
@@ -31,6 +39,10 @@ export class PayController {
         })
 
         console.log("notify");
+
+        let obj = parseXMLToJSON(data);
+        console.log(obj);
+
 
         //     <xml>
         //     <openid><![CDATA[oYHEKuMV8Kt0QLBIMjmZfxoWwsjU]]></openid>

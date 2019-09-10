@@ -43,9 +43,11 @@ export class MCH {
         return sign;
     }
 
+
     async unifiedorder(args: {
         openid: string, body: string, notify_url: string,
-        out_trade_no: string, total_fee: number
+        out_trade_no: string, total_fee: number,
+        attach?: string
     }): Promise<{ prepay_id: string | number }> {
 
         let url = this.url("pay/unifiedorder");
@@ -62,6 +64,10 @@ export class MCH {
         let key = await this.getParanerKey();
         let sign = getMD5Sign(key, args);
         args["sign"] = sign;
+
+        if (this.cr.getIsSandBox()) {
+            args.total_fee = 101;
+        }
 
         type Result = { prepay_id: string };
         let obj = await WeiXinRequest.postByXML<Result>(url, args);

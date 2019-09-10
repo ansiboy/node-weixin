@@ -12,7 +12,7 @@ export class HomeController extends Controller {
     @action()
     config() {
         let { appId, partnerId } = config.weixin;
-        return { appId, partnerId };
+        return { appId, partnerId, port: config.port };
     }
 
     @action()

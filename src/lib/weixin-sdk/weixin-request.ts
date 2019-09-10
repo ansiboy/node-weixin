@@ -38,19 +38,20 @@ export class WeiXinRequest {
                 if (!isXML) {
                     return Promise.resolve(text as any as T);
                 }
-          
-                let json: string = xmljs.xml2json(text, { compact: true });
 
-                let obj = JSON.parse(json);
-                if (obj["xml"] == null)
-                    return Promise.reject(errors.responseFormatError(text))
+                // let json: string = xmljs.xml2json(text, { compact: true });
 
-                obj = obj["xml"];
-                let names = Object.getOwnPropertyNames(obj);
-                for (let i = 0; i < names.length; i++) {
-                    let name = names[i];
-                    obj[name] = obj[name]["_cdata"] ? obj[name]["_cdata"] : obj[name];
-                }
+                // let obj = JSON.parse(json);
+                // if (obj["xml"] == null)
+                //     return Promise.reject(errors.responseFormatError(text))
+
+                // obj = obj["xml"];
+                // let names = Object.getOwnPropertyNames(obj);
+                // for (let i = 0; i < names.length; i++) {
+                //     let name = names[i];
+                //     obj[name] = obj[name]["_cdata"] ? obj[name]["_cdata"] : obj[name];
+                // }
+                let obj = parseXMLToJSON(text);
 
                 type Result = { return_code: string, return_msg: string };
                 if ((obj as Result).return_code != SUCCESS_STR) {
@@ -65,4 +66,21 @@ export class WeiXinRequest {
             })
 
     }
+}
+
+export function parseXMLToJSON(xml: string) {
+    let json: string = xmljs.xml2json(xml, { compact: true });
+    let obj = JSON.parse(json);
+    if (obj["xml"] == null)
+        return Promise.reject(errors.responseFormatError(xml))
+
+    obj = obj["xml"];
+    let names = Object.getOwnPropertyNames(obj);
+    for (let i = 0; i < names.length; i++) {
+        let name = names[i];
+        obj[name] = obj[name]["_cdata"] ? obj[name]["_cdata"] : obj[name];
+    }
+
+    return obj;
+
 }
