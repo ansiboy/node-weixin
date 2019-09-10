@@ -1,1 +1,1 @@
-export { WeiXinSDK } from "./wexin-sdk";
+export { WeiXinSDK } from "./weixin-sdk";

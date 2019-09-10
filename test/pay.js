@@ -1,7 +1,4 @@
-const { WeiXinSDK } = require("../out/lib/wexin-sdk");
-const { config } = require("../out/config");
 const { guid } = require("maishu-chitu-service");
-
 const { weixinSDK } = require("./common");
 
 
