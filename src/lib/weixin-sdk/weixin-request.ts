@@ -2,7 +2,6 @@ import { Service } from "maishu-chitu-service";
 import xmljs = require('xml-js');
 import fetch from "node-fetch"
 import { errors } from "./errors";
-import { promises } from "dns";
 
 const SUCCESS_NUM = 0;
 const SUCCESS_STR = "SUCCESS";

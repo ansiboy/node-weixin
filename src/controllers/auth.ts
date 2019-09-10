@@ -3,12 +3,16 @@ import { controller, action, Controller, routeData } from "maishu-node-mvc";
 import { request } from "maishu-node-mvc/dist/attributes";
 import http = require("http");
 import { config } from "../config";
+import { wx } from "../common";
 
 @controller("/auth")
 export class AuthController extends Controller {
     @action()
-    callback(@routeData { code }) {
-        return code;
+    async callback(@routeData { code }) {
+        if (!code) throw new Error(`route data field code is null or empty.`);
+        let r = await wx.access_token(code);
+
+        return r;
     }
 
     @action()

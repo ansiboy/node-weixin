@@ -20,5 +20,9 @@ export let errors = {
     AppKeyNull(): Error {
         let err: Error = { name: "AppKeyNull", message: "AppKeyNull" };
         return err;
+    },
+    argumentNull(argumentName: string): Error {
+        let err: Error = { name: "argumentNull", message: `Argument ${argumentName} can not be null or empty.` };
+        return err;
     }
 }

@@ -4,6 +4,7 @@ import NodeCache = require("node-cache");
 import { WeiXinRequest } from "./weixin-request";
 import { MCH } from "./mch";
 import { Config, ConfigReader } from "./common";
+import { errors } from "./errors";
 const myCache = new NodeCache();
 
 
@@ -47,8 +48,15 @@ export class WeiXinSDK {
         return r;
     }
 
-    async sign(args: { [key: string]: string }) {
+    async access_token(code: string) {
+        
+        if (!code) throw errors.argumentNull("code");
 
+        let appid = this.cr.getAppId();
+        let secret = this.cr.getAppKey();
+        let url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appid}&secret=${secret}&code=${code}&grant_type=authorization_code`;
+        type Result = { access_token: string, expires_in: number, refresh_token: string, openid: string, scope: string };
+        return WeiXinRequest.get<Result>(url)
     }
 }
 

@@ -1,0 +1,1 @@
+export { WeiXinSDK } from "./wexin-sdk";
