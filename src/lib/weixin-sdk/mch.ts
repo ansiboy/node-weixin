@@ -60,14 +60,14 @@ export class MCH {
         args["nonce_str"] = nonce_str;
         args["trade_type"] = parameterValue2;
         args["spbill_create_ip"] = spbill_create_ip;
+        if (this.cr.getIsSandBox()) {
+            args.total_fee = 101;
+        }
 
         let key = await this.getParanerKey();
         let sign = getMD5Sign(key, args);
         args["sign"] = sign;
 
-        if (this.cr.getIsSandBox()) {
-            args.total_fee = 101;
-        }
 
         type Result = { prepay_id: string };
         let obj = await WeiXinRequest.postByXML<Result>(url, args);
