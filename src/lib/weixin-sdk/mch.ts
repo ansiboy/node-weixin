@@ -46,7 +46,7 @@ export class MCH {
 
     async unifiedorder(args: {
         openid: string, body: string, notify_url: string,
-        out_trade_no: string, total_fee: number,
+        out_trade_no: string, total_fee: number, detail?: string,
         attach?: string
     }): Promise<{ prepay_id: string | number }> {
 

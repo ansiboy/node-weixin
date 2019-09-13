@@ -43,16 +43,17 @@ function getPackage(partnerId: string, partnerKey: string, params: { [key: strin
 }
 
 export interface Config {
-    appid?: string
-    appkey?: string
+    appId?: string
+    appKey?: string
     partnerId?: string
     partnerKey?: string,
     isSandBox?: boolean,
+    miniAppId?: string,
+    miniAppKey?: string,
 }
 
 export class ConfigReader {
     private config: Config;
-    private sandboxPartnerKey: any;
     constructor(config: Config) {
         this.config = config;
     }
@@ -65,23 +66,23 @@ export class ConfigReader {
     }
 
     getAppId() {
-        if (!this.config.appid)
-            throw errors.AppIdIsNull();
+        if (!this.config.appId)
+            throw errors.configFieldNull("appId");
 
-        return this.config.appid;
+        return this.config.appId;
     }
 
     getAppKey() {
-        if (!this.config.appkey)
-            throw errors.AppKeyNull();
+        if (!this.config.appKey)
+            throw errors.configFieldNull("appKey");
 
-        return this.config.appkey;
+        return this.config.appKey;
     }
 
 
     getParanerId() {
         if (!this.config.partnerId)
-            throw errors.partnerIdIsNull();
+            throw errors.configFieldNull("partnerId");
 
         return this.config.partnerId;
     }
@@ -89,9 +90,25 @@ export class ConfigReader {
 
     getParanerKey() {
         if (!this.config.partnerKey)
-            throw errors.partnerKeyIsNull();
+            throw errors.configFieldNull("partnerKey");
 
         return this.config.partnerKey;
+    }
+
+    getMiniAppId() {
+        console.log(this.config)
+        if (!this.config.miniAppId)
+            throw errors.configFieldNull("miniAppId");
+
+        return this.config.miniAppId;
+    }
+
+    getMiniAppKey() {
+        console.log(this.config)
+        if (!this.config.miniAppKey)
+            throw errors.configFieldNull("miniAppKey");
+
+        return this.config.miniAppKey;
     }
 
 }

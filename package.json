@@ -2,7 +2,7 @@
     "scripts": {
         "build": "tsc -p src",
         "start": "node ./out/index.js",
-        "test": "mocha"
+        "test": "mocha --timeout 15000"
     },
     "dependencies": {
         "amqplib": "^0.5.5",

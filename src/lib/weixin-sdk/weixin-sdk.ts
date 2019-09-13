@@ -5,22 +5,27 @@ import { WeiXinRequest } from "./weixin-request";
 import { MCH } from "./mch";
 import { Config, ConfigReader } from "./common";
 import { errors } from "./errors";
+import { SNS } from "./sns";
 const myCache = new NodeCache();
 
 
 export class WeiXinSDK {
 
     mch: MCH;
+    sns: SNS;
+
     config: Config = {};
-    cr: ConfigReader;
+    
+    private cr: ConfigReader;
 
     constructor() {
-
         this.cr = new ConfigReader(this.config);
         this.mch = new MCH(this.cr);
+        this.sns = new SNS(this.cr);
     }
+
     /**
-     * 
+     * 获取 token
      * @param appid 第三方用户唯一凭证
      * @param secret 第三方用户唯一凭证密钥，即appsecret
      * @param fromCache 是否从缓存读取,默认为 true
@@ -49,7 +54,7 @@ export class WeiXinSDK {
     }
 
     async access_token(code: string) {
-        
+
         if (!code) throw errors.argumentNull("code");
 
         let appid = this.cr.getAppId();
