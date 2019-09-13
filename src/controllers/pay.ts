@@ -36,7 +36,7 @@ export class PayController {
 
         console.log("notify");
 
-        let obj = parseXMLToJSON(data);
+        let obj = await parseXMLToJSON(data);
         console.log(obj);
 
 
