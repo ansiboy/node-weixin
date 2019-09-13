@@ -28,17 +28,14 @@ export class PayController {
         req.on("data", chunk => {
             data = data + chunk;
         });
-        req.on("end", () => {
+        req.on("end", async () => {
             console.log("=== data ========================")
             console.log(data);
             console.log("==================================")
+
+            let obj = await parseXMLToJSON(data);
+            console.log(obj);
         })
-
-        console.log("notify");
-
-        let obj = await parseXMLToJSON(data);
-        console.log(obj);
-
 
         //     <xml>
         //     <openid><![CDATA[oYHEKuMV8Kt0QLBIMjmZfxoWwsjU]]></openid>
