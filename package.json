@@ -15,6 +15,7 @@
         "xml-js": "^1.6.11"
     },
     "devDependencies": {
+        "@types/amqplib": "^0.5.13",
         "@types/crypto-js": "^3.1.43",
         "@types/node-fetch": "^2.5.0",
         "@types/socket.io": "^2.1.2"
