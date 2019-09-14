@@ -9,5 +9,11 @@ export let errors = {
             message: `Route data ${fieldName} field is null or empty.`
         }
         return err;
+    },
+    attachFieldRequired() {
+        let err: Error = {
+            name: errors.attachFieldRequired.name,
+            message: `Attach field of Weixin paid message is required.`
+        }
     }
 }

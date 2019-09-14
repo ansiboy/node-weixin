@@ -64,6 +64,9 @@ export class MCH {
             args.total_fee = 101;
         }
 
+        // attach 最长为 127
+        console.assert((args.attach || '').length <= 127);
+
         let key = await this.getParanerKey();
         let sign = getMD5Sign(key, args);
         args["sign"] = sign;
@@ -85,8 +88,6 @@ export class MCH {
         let key = await this.getParanerKey();
         let sign = getMD5Sign(key, args);
         args["sign"] = sign;
-        //sign
-
 
         type Result = {};
         let obj = await WeiXinRequest.postByXML<Result>(url, args);
