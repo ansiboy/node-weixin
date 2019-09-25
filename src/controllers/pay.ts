@@ -48,9 +48,9 @@ export class PayController {
             data = data + chunk;
         });
         req.on("end", async () => {
-            console.log("=== data ========================")
-            console.log(data);
-            console.log("==================================")
+            // console.log("=== data ========================")
+            // console.log(data);
+            // console.log("==================================")
 
             this.sendPaidMessage(data);
         })

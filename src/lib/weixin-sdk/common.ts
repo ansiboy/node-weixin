@@ -96,7 +96,6 @@ export class ConfigReader {
     }
 
     getMiniAppId() {
-        console.log(this.config)
         if (!this.config.miniAppId)
             throw errors.configFieldNull("miniAppId");
 
@@ -104,7 +103,6 @@ export class ConfigReader {
     }
 
     getMiniAppKey() {
-        console.log(this.config)
         if (!this.config.miniAppKey)
             throw errors.configFieldNull("miniAppKey");
 
