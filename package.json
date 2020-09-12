@@ -10,7 +10,7 @@
         "maishu-chitu-service": "^1.8.5",
         "maishu-node-mvc": "^1.31.0",
         "node-cache": "^4.2.1",
-        "node-fetch": "^2.6.0",
+        "node-fetch": "^2.6.1",
         "socket.io": "^2.2.0",
         "xml-js": "^1.6.11"
     },
